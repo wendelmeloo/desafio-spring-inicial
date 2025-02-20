@@ -4,6 +4,7 @@ import br.com.desafiospring.inicial.model.Gato;
 import br.com.desafiospring.inicial.service.GatoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,12 @@ public class GatoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarGatoPeloId(@PathVariable Long id) {
         gatoService.deletarGatoPeloId(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Gato> atualizarGato(@PathVariable Long id, @RequestBody Gato gato) {
+        Gato gatoAtualizado = gatoService.atualizarGato(id, gato);
+        return ResponseEntity.ok(gatoAtualizado);
     }
 
 }

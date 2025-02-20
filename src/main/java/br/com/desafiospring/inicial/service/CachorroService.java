@@ -31,4 +31,14 @@ public class CachorroService {
     public void deletarCachorroPeloId(Long id) {
         cachorroRepository.deleteById(id);
     }
+
+    public Cachorro atualizarCachorro(Long id, Cachorro cachorroAtualizado) {
+        return cachorroRepository.findById(id).map(cachorro -> {
+            cachorro.setNome(cachorroAtualizado.getNome());
+            cachorro.setIdade(cachorroAtualizado.getIdade());
+            cachorro.setRaca(cachorroAtualizado.getRaca());
+            return cachorroRepository.save(cachorro);
+        }).orElseThrow(() -> new RuntimeException("Cachorro não encontrado com ID: " + id));
+    }
+
 }

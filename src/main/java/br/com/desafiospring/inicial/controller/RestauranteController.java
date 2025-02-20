@@ -5,6 +5,7 @@ import br.com.desafiospring.inicial.model.Restaurante;
 import br.com.desafiospring.inicial.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,16 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarRestaurantePeloId(@PathVariable Long id) {
         restauranteService.deletarRestaurantePeloId(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurante> atualizarRestaurante(@PathVariable Long id, @RequestBody Restaurante restaurante) {
+        try {
+            Restaurante restauranteAtualizado = restauranteService.atualizarRestaurante(id, restaurante);
+            return ResponseEntity.ok(restauranteAtualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

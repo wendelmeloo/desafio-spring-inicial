@@ -30,4 +30,13 @@ public class GatoService {
     public void deletarGatoPeloId(Long id){
         gatoRepository.deleteById(id);
     }
+
+    public Gato atualizarGato(Long id, Gato gatoAtualizado) {
+        return gatoRepository.findById(id).map(gato -> {
+            gato.setNome(gatoAtualizado.getNome());
+            gato.setCor(gatoAtualizado.getCor());
+            gato.setPeso(gatoAtualizado.getPeso());
+            return gatoRepository.save(gato);
+        }).orElseThrow(() -> new RuntimeException("Gato não encontrado com ID: " + id));
+    }
 }

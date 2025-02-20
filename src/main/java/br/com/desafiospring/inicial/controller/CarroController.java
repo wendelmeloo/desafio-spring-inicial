@@ -4,6 +4,7 @@ import br.com.desafiospring.inicial.model.Carro;
 import br.com.desafiospring.inicial.service.CarroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,12 @@ public class CarroController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarCarroPeloId(@PathVariable Long id) {
         carroService.deletarCarroPeloId(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Carro> atualizarCarro(@PathVariable Long id, @RequestBody Carro carro) {
+        Carro carroAtualizado = carroService.atualizarCarro(id, carro);
+        return ResponseEntity.ok(carroAtualizado);
     }
 
 }

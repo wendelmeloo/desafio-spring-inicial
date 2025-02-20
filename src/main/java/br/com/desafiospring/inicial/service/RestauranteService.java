@@ -28,4 +28,13 @@ public class RestauranteService {
     public void deletarRestaurantePeloId(Long id){
         restauranteRepository.deleteById(id);
     }
+
+    public Restaurante atualizarRestaurante(Long id, Restaurante restauranteAtualizado) {
+        return restauranteRepository.findById(id).map(restaurante -> {
+            restaurante.setNome(restauranteAtualizado.getNome());
+            restaurante.setCozinha(restauranteAtualizado.getCozinha());
+            restaurante.setNota(restauranteAtualizado.getNota());
+            return restauranteRepository.save(restaurante);
+        }).orElseThrow(() -> new RuntimeException("Restaurante não encontrado com ID: " + id));
+    }
 }

@@ -4,6 +4,7 @@ import br.com.desafiospring.inicial.model.Cachorro;
 import br.com.desafiospring.inicial.service.CachorroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,16 @@ public class CachorroController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarCachorroPeloId(@PathVariable Long id) {
         cachorroService.deletarCachorroPeloId(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cachorro> atualizarCachorro(@PathVariable Long id, @RequestBody Cachorro cachorro) {
+        try {
+            Cachorro cachorroAtualizado = cachorroService.atualizarCachorro(id, cachorro);
+            return ResponseEntity.ok(cachorroAtualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

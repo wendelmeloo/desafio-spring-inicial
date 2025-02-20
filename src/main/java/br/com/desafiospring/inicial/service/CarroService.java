@@ -29,4 +29,13 @@ public class CarroService {
     public void deletarCarroPeloId(Long id) {
         carroRepository.deleteById(id);
     }
+
+    public Carro atualizarCarro(Long id, Carro carroAtualizado) {
+        return carroRepository.findById(id).map(carro -> {
+            carro.setMarca(carroAtualizado.getMarca());
+            carro.setModelo(carroAtualizado.getModelo());
+            carro.setAno(carroAtualizado.getAno());
+            return carroRepository.save(carro);
+        }).orElseThrow(() -> new RuntimeException("Carro nao encontrado com ID: " + id));
+    }
 }
